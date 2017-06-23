@@ -13,16 +13,11 @@ namespace WSBackupReport {
 		private bool isFirstRun;
 		private Dictionary<string, string> attributeTable;
 
-		public static void Main(string[] args) {
-			ConfigManager manager = new ConfigManager();
-			Console.WriteLine(File.GetCreationTime(CONFIG_FILE_NAME) > DateTime.Now.AddMinutes(-10));
-		}
-
 		public ConfigManager() {
 			isFirstRun = !File.Exists(CONFIG_FILE_NAME);
 			attributeTable = new Dictionary<string, string>();
 			parseConfigFile();
-			configFileWriter = new StreamWriter(CONFIG_FILE_NAME);
+			configFileWriter = new StreamWriter(CONFIG_FILE_NAME, false);
 		}
 
 		public bool isInitialRun() {
@@ -31,16 +26,20 @@ namespace WSBackupReport {
 
 		private void parseConfigFile() {
 			if (isFirstRun) return;
-			configFileReader = new StreamReader(CONFIG_FILE_NAME);
+			configFileReader = new StreamReader(CONFIG_FILE_NAME, true);
 			String currentString;
 			while((currentString = configFileReader.ReadLine()) != null) {
-				attributeTable.Add(currentString.Split('=')[0], currentString.Split('=')[1]);
+				setAttribute(currentString.Split('=')[0], currentString.Split('=')[1]);
 			}
 			configFileReader.Close();
 		}
-
+		
 		public void setAttribute(String key, String value) {
-			attributeTable.Add(key.ToUpper(), value);
+			if (attributeTable.ContainsKey(key.ToUpper())) {
+				attributeTable[key.ToUpper()] = value;
+			} else {
+				attributeTable.Add(key.ToUpper(), value);
+			}
 		}
 
 		public string getAttribute(string key) {

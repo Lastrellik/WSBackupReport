@@ -76,6 +76,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigManager.cs" />
+    <Compile Include="MainGui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainGui.Designer.cs">
+      <DependentUpon>MainGui.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainGui.aa.resx">
+      <DependentUpon>MainGui.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainGui.en.resx">
+      <DependentUpon>MainGui.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainGui.resx">
+      <DependentUpon>MainGui.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
