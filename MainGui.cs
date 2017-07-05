@@ -11,6 +11,7 @@ using System.Windows.Forms;
 namespace WSBackupReport {
 	public partial class WSBackupReport : Form {
 		private ConfigManager configManager;
+		private TaskEditor taskEditor;
 
 		public static void Main(string[] args) {
 			WSBackupReport wsbrpt = new WSBackupReport();
@@ -21,6 +22,7 @@ namespace WSBackupReport {
 		public WSBackupReport() {
 			InitializeComponent();
 			configManager = new ConfigManager();
+			taskEditor = new TaskEditor();
 		}
 
 		public void loadSavedGuiData() {
@@ -38,6 +40,7 @@ namespace WSBackupReport {
 			if (isValidInput()) {
 				buildConfigFile();
 				configManager.close();
+				taskEditor.registerTask();
 				Application.Exit();
 			}
 		}
